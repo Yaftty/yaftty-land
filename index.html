@@ -24,6 +24,7 @@ body {
   align-items: center;
   background: #f5f7fb;
   color: #1e2a3a;
+  font-family: "Inter", sans-serif;
 }
 
 .logo {
@@ -145,6 +146,14 @@ h1 {
 .lang-btn:hover {
   transform: translateY(-2px);
 }
+.arabic,
+.arabic h1,
+.arabic p,
+.arabic input,
+.arabic button {
+  font-weight: 700;
+  font-family: "IBM Plex Sans Arabic", sans-serif;
+}
 </style>
 </head>
 
@@ -223,7 +232,7 @@ h1 {
           document.getElementById("langBtn").textContent = t.langBtn;
         
           document.getElementById("message").textContent = "";
-        
+          document.body.classList.toggle("arabic", lang === "ar");
           if (lang === "ar") {
             document.body.style.direction = "rtl";
             document.body.style.textAlign = "right";
