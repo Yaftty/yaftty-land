@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yaftty — Coming Soon</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: #f5f7fb;
+  color: #1e2a3a;
+}
+
+.logo {
+  margin-top: 30px;
+  font-size: 35px;
+  font-weight: 800;
+  color: #2f5be7;
+}
+
+.center {
+  text-align: center;
+  animation: fade 1s ease;
+}
+
+h1 {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.notify {
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: none;
+  background: #2f5be7;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.notify:hover {
+  transform: translateY(-2px);
+}
+
+.bottom {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.bottom p {
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.socials {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.socials a {
+  font-size: 20px;
+  text-decoration: none;
+  color: #2f5be7;
+  transition: 0.3s;
+}
+
+.socials a:hover {
+  transform: scale(1.2);
+}
+
+@keyframes fade {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+@media(max-width: 600px){
+  h1 {
+    font-size: 28px;
+  }
+}
+
+.form {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.form input {
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  width: 250px;
+  font-size: 14px;
+}
+
+.form button {
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  background: #2f5be7;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.form button:hover {
+  transform: translateY(-2px);
+}
+
+#message {
+  margin-top: 15px;
+  font-size: 14px;
+  color: green;
+}
+.lang-btn {
+  margin-top: 15px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: #2f5be7;
+  color: white;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.lang-btn:hover {
+  transform: translateY(-2px);
+}
+</style>
+</head>
+
+<body>
+
+<div class="logo">Yaftty</div>
+
+
+<div class="center">
+    <h1 id="title">Coming Soon</h1>
+
+    <form id="waitlist-form" class="form">
+      <input 
+        type="email" 
+        id="email"
+        placeholder="Enter your email" 
+        required
+      />
+      <button type="submit" id="btnText">Notify Me</button>
+    </form>
+
+    <p id="message"></p>
+</div>
+
+<div class="bottom">
+    <p id="followText">Follow us</p>
+    <div class="socials">
+        <a href="https://youtube.com/@yaftty" target="_blank">
+          <i class="fa-brands fa-youtube"></i>
+        </a>
+      
+        <a href="https://instagram.com/yaftty.co" target="_blank">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+      </div>
+     
+      
+      <button id="langBtn" class="lang-btn">العربية</button>
+</div>
+
+
+   
+   <!-- LANGUAGE -->
+   <script>
+        let isArabic = false;
+        
+        const texts = {
+          en: {
+            title: "Coming Soon",
+            placeholder: "Enter your email",
+            button: "Notify Me",
+            success: "You're on the list! We'll notify you soon.",
+            invalid: "Please enter a valid email address.",
+            domain: "Please use a valid email (gmail, yahoo, icloud, or x).",
+            langBtn: "العربية",
+            follow: "Follow us"
+          },
+          ar: {
+            title: "قريباً",
+            placeholder: "أدخل بريدك الإلكتروني",
+            button: "تم",
+            success: "تم تسجيلك بنجاح! سنقوم بإشعارك قريباً.",
+            invalid: "يرجى إدخال بريد إلكتروني صحيح.",
+            domain: "يرجى استخدام بريد صالح (gmail, yahoo, icloud, x).",
+            langBtn: "English",
+            follow: "تابعنا"
+          }
+        };
+        
+        function setLanguage(lang) {
+          const t = texts[lang];
+          document.getElementById("followText").textContent = t.follow;
+          document.getElementById("title").textContent = t.title;
+          document.getElementById("email").placeholder = t.placeholder;
+          document.getElementById("btnText").textContent = t.button;
+          document.getElementById("langBtn").textContent = t.langBtn;
+        
+          document.getElementById("message").textContent = "";
+        
+          if (lang === "ar") {
+            document.body.style.direction = "rtl";
+            document.body.style.textAlign = "right";
+          } else {
+            document.body.style.direction = "ltr";
+            document.body.style.textAlign = "center";
+          }
+        }
+        
+        // toggle language
+        document.getElementById("langBtn").addEventListener("click", function() {
+          isArabic = !isArabic;
+          setLanguage(isArabic ? "ar" : "en");
+        });
+        
+        // set default
+        setLanguage("en");
+        </script>
+
+        <!-- FIREBASE -->
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+            import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+            
+            const firebaseConfig = {
+              apiKey: "AIzaSyC17xbeKvEuufJxzdbfFMPR3xHvrpSDBbg",
+              authDomain: "yaftty-newsletter.firebaseapp.com",
+              projectId: "yaftty-newsletter"
+            };
+            
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+            
+            // FORM LOGIC
+            document.getElementById("waitlist-form").addEventListener("submit", async function(e) {
+              e.preventDefault();
+            
+              const emailInput = document.getElementById("email");
+              const message = document.getElementById("message");
+              const email = emailInput.value.trim().toLowerCase();
+            
+              const lang = isArabic ? "ar" : "en";
+              const t = texts[lang];
+            
+              const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+              if (!emailPattern.test(email)) {
+                message.style.color = "red";
+                message.textContent = t.invalid;
+                return;
+              }
+            
+              const allowedDomains = ["gmail.com", "yahoo.com", "icloud.com", "x.com"];
+              const domain = email.split("@")[1];
+            
+              if (!allowedDomains.includes(domain)) {
+                message.style.color = "red";
+                message.textContent = t.domain;
+                return;
+              }
+            
+              try {
+                await addDoc(collection(db, "waitlist"), {
+                  email: email,
+                  createdAt: new Date()
+                });
+            
+                message.style.color = "green";
+                message.textContent = t.success;
+                emailInput.value = "";
+            
+              } catch (error) {
+                message.style.color = "red";
+                message.textContent = "Something went wrong. Try again.";
+                console.error(error);
+              }
+            });
+            </script>
+</body>
+</html>
