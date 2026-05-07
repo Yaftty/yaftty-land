@@ -229,7 +229,8 @@ h1 {
             domain: "Please use a valid email (gmail, yahoo, icloud, or x).",
             langBtn: "العربية",
             follow: "Follow us",
-            copyright: "© 2026 Yaftty. All rights reserved."
+            copyright: "© 2026 Yaftty. All rights reserved.",
+            exists: "This email is already subscribed."
           },
           ar: {
             title: "قريباً",
@@ -240,7 +241,8 @@ h1 {
             domain: "يرجى استخدام بريد صالح (gmail, yahoo, icloud, x).",
             langBtn: "English",
             follow: "تابعنا",
-            copyright: "© ٢٠٢٦ يافططي. جميع الحقوق محفوظة."
+            copyright: "© ٢٠٢٦ يافططي. جميع الحقوق محفوظة.",
+            exists: "هذا البريد الإلكتروني مشترك بالفعل."
           }
         };
         
@@ -277,7 +279,14 @@ h1 {
         <!-- FIREBASE -->
         <script type="module">
             import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-            import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+            import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
             
             const firebaseConfig = {
               apiKey: "AIzaSyC17xbeKvEuufJxzdbfFMPR3xHvrpSDBbg",
@@ -316,21 +325,40 @@ h1 {
                 return;
               }
             
-              try {
-                await addDoc(collection(db, "waitlist"), {
-                  email: email,
-                  createdAt: new Date()
-                });
-            
-                message.style.color = "green";
-                message.textContent = t.success;
-                emailInput.value = "";
-            
-              } catch (error) {
-                message.style.color = "red";
-                message.textContent = "Something went wrong. Try again.";
-                console.error(error);
-              }
+             try {
+
+// CHECK IF EMAIL ALREADY EXISTS
+const q = query(
+  collection(db, "waitlist"),
+  where("email", "==", email)
+);
+
+const querySnapshot = await getDocs(q);
+
+if (!querySnapshot.empty) {
+  message.style.color = "orange";
+  message.textContent = t.exists;
+  return;
+}
+
+// ADD NEW EMAIL
+await addDoc(collection(db, "waitlist"), {
+  email: email,
+  createdAt: new Date()
+});
+
+message.style.color = "green";
+message.textContent = t.success;
+
+emailInput.value = "";
+
+} catch (error) {
+
+message.style.color = "red";
+message.textContent = "Something went wrong. Try again.";
+
+console.error(error);
+}
             });
             </script>
 </body>
