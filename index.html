@@ -16,17 +16,23 @@
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 220px;
   align-items: center;
+
+  padding: 20px;
+
+  gap: clamp(40px, 8vh, 120px);
+
   background: #f5f7fb;
   color: #1e2a3a;
-  font-family: "Inter", sans-serif;
-}
 
+  font-family: "Inter", sans-serif;
+
+  overflow-x: hidden;
+}
 .logo {
   margin-top: 30px;
   font-size: 35px;
